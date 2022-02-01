@@ -1,4 +1,5 @@
 import { GENESIS_DATA } from "../config/config";
+import cryptoHash from "../utils/crypto-hash";
 import Block from "./block";
 
 describe("Tests for blocks", () => {
@@ -51,6 +52,10 @@ describe("Tests for blocks", () => {
 
     it('Should the timeStamp not to be undefined', () => {
       expect(minedBlock.timeStamp).not.toEqual(undefined)
+    })
+
+    it('Should create a `hash` SHA-256 based on timeStamp, prevHash and data', () => {
+      expect(minedBlock.hash).toEqual(cryptoHash(minedBlock.timeStamp, lastBlock.hash, data))
     })
 
   })

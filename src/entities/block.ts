@@ -1,4 +1,5 @@
 import { GENESIS_DATA } from "../config/config";
+import cryptoHash from "../utils/crypto-hash";
 
 interface Block {
   timeStamp : any, 
@@ -27,11 +28,15 @@ class Block {
   }
 
   static mineBlock(param : MineBlockData) : Block {
+    const timeStamp = Date.now()
+    const prevHash = param.lastBlock.hash
+    const data = param.data
+
     return new this({
-      timeStamp: Date.now(),
-      data: param.data,
-      hash: '',
-      prevHash: param.lastBlock.hash
+      timeStamp,
+      data,
+      prevHash,
+      hash: cryptoHash(timeStamp, prevHash, data)
     })
   }
 }
